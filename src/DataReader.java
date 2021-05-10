@@ -93,8 +93,7 @@ public class DataReader {
         }
     }
 
-    public void printValues()
-    {
+    public void printValues() {
         Arrays.stream(inputs).forEach(v -> {
             for (int i = 0; i < 8; i++) {
                 System.out.print(v[i] + " ");

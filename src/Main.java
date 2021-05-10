@@ -1,11 +1,11 @@
-import java.util.Random;
-
 public class Main {
 
     public static void main(String[] args) {
         float[][] inputs = new float[500][8];   //500 adet veri, 8 attribute
         DataReader dataReader = new DataReader();   //Verileri okmak için ayrı oluşturulan ayrı class'ın nesnesi yaratılıyor
         inputs = dataReader.getInputs();
+        System.out.println(inputs.length + " " + inputs[0].length);
+//        dataReader.printValues();
         //dataReader.printValues();   //normalize edilmiş veriler ekrana yazdırılıyor
 
 //        float[][] inputFloats = new float[500][8];
@@ -17,9 +17,6 @@ public class Main {
 //        }
 
 
-
-        MyGUI myGUI = new MyGUI();
-        //myGUI.showHeatMap(null);
         SOM som = new SOM(inputs);
         int epoch = 1;
         for (int i = 0; i < epoch; i++) {
@@ -28,6 +25,11 @@ public class Main {
         }
 
 
+        MyGUI myGUI = new MyGUI();
+
+        myGUI.showHeatMap(som.createHeatMap(), "dene");
+        //myGUI.showHeatMap(null);
+
 ////        som.printValues();
 //        int[] neuronIndex = {0,0};
 //        som.printValue(neuronIndex);
@@ -35,7 +37,6 @@ public class Main {
 //        som.printValue(neuronIndex);
 
 //        myGUI.showHeatMap(som.createHeatMap(),"deneme");
-
 
 
 //        int[][] deneme = new int[10][10];

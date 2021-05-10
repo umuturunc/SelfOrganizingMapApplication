@@ -17,7 +17,7 @@ public class SOM {
     }
 
     public void updateLearningRate() {
-        learningRate *= 0.8f;
+        learningRate *= 0.9f;
     }
 
 
@@ -30,27 +30,25 @@ public class SOM {
     }
 
     private float euclidDistance(float[] array1, float[] array2) {
-        float distance = 0;
+
+        float distance = 0.0f;
         for (int i = 0; i < 8; i++) {
-            distance += (float) Math.sqrt(array1[i] - array2[i]);
+            float difference = array1[i] - array2[2];
+            distance += difference * difference;
         }
-        System.out.println(distance);
         return distance;
     }
 
     private int[] nearestNeuron(float[] input, float[][][] neurons) {
         int[] nearestNeuronIndexes = new int[2];
         float minDistance = Float.MAX_VALUE;
-//        System.out.println(minDistance);
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                for (int k = 0; k < 8; k++) {
-                    float distance = euclidDistance(neurons[i][j], input);
-                    if (distance < minDistance) {
-                        minDistance = distance;
-                        nearestNeuronIndexes[0] = i;
-                        nearestNeuronIndexes[1] = j;
-                    }
+                float distance = euclidDistance(neurons[i][j], input);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    nearestNeuronIndexes[0] = i;
+                    nearestNeuronIndexes[1] = j;
                 }
             }
         }
@@ -67,13 +65,6 @@ public class SOM {
         }
         return heatMapArray;
     }
-
-
-
-//    public int[][] createHeatMapForAttribute(int index)
-//    {
-//
-//    }
 
 
     private void updateNeuronWeights(float[] input, int[] neuronIndexes) {
@@ -97,8 +88,7 @@ public class SOM {
         }
     }
 
-    public void printInputValues()
-    {
+    public void printInputValues() {
         for (int i = 0; i < inputs.length; i++) {
             for (int j = 0; j < inputs[i].length; j++) {
                 System.out.print(inputs[i][j] + " ");
