@@ -13,8 +13,6 @@ public class MyGUI {
         panel.setLayout(new GridLayout(10, 10));
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-//        frame.pack();
-//        frame.setLocationRelativeTo(null);
     }
 
     public void showHeatMap(int[][] array, String title) {
@@ -25,7 +23,6 @@ public class MyGUI {
             for (int j = 0; j < 10; j++) {
                 JButton button = new JButton();
                 button.setFocusable(false);
-//                button.setFocusPainted(false);
                 button.removeMouseListener(button.getMouseListeners()[0]);
                 button.setFont(new Font(null, Font.BOLD, 20));
                 button.setText(String.valueOf(array[i][j]));
@@ -46,7 +43,6 @@ public class MyGUI {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 normalizedArray[i][j] = (array[i][j] / (float) max);
-//                System.out.println(array[i][j] + " " + max + " " +   (array[i][j]/(float)max));
             }
         }
         return normalizedArray;
@@ -60,7 +56,6 @@ public class MyGUI {
                     max = array[i][j];
             }
         }
-//        System.out.println(max);
         return max;
     }
 }

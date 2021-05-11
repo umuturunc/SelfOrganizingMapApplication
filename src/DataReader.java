@@ -24,20 +24,14 @@ public class DataReader {
 
         try {
             fis = new FileInputStream(datasetPath);
-            sc = new Scanner(fis);  //attribute isimlerini içeren satır atlanıyor
-            System.out.println(sc.nextLine());
+            sc = new Scanner(fis);
+//            System.out.println(sc.nextLine());
+            sc.nextLine(); //attribute isimlerini içeren satır atlanıyor
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
-
     }
 
-//    public void setInputs(float[][] inputs)
-//    {
-//        this.inputs = inputs;
-//        normalizeValues();
-//    }
 
     private void initializeDummyTable() {   //integer encoding
         dummyTable.put("TT", 0f);
@@ -75,7 +69,6 @@ public class DataReader {
             }
             inputs[count++] = vector;
         }
-
     }
 
     private void copyArray(String[] strArray, float[] floatArray) {

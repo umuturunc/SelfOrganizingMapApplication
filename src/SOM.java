@@ -23,7 +23,6 @@ public class SOM {
 
 
     public void iterateAllInputs() {        //1 epoch
-//        System.out.println(inputs.length);
         for (int i = 0; i < inputs.length; i++) {
             int[] nearesNeuronIndex = nearestNeuronForInput(inputs[i], neurons);
             updateNeuronWeights(inputs[i], nearesNeuronIndex);
@@ -65,23 +64,7 @@ public class SOM {
             weight = weight + learningRate * (input[k] - weight);
             neurons[i][j][k] = weight;
         }
-
-
     }
-//    private void deltaWeight()
-//    {
-//        float deltaWeight =
-//    }
-//
-//    private float hebbsRule()
-//    {
-//        return learningRate
-//    }
-//
-//    private float forgettingRule()
-//    {
-//
-//    }
 
     private void distanceBetweenWinningNeuronAndAllNeurons(int[] winningNeuronIndexes) {    //nöronlar arasındaki uzaklık matristeki koordinatlarına göre hesaplanıyor
         int winningI = winningNeuronIndexes[0];
@@ -92,7 +75,6 @@ public class SOM {
                 neuronDistances[i][j] = (float) Math.sqrt((i - winningI) * (i - winningI) + (j - winningJ) * (j - winningJ));
             }
         }
-
     }
 
     public void printInputValues() {
@@ -131,8 +113,7 @@ public class SOM {
         for (int k = 0; k < 8; k++) {
             System.out.print(neurons[i][j][k] + " ");
         }
-        System.out.println();
-
+//        System.out.println();
     }
 
     public int[][] createHeatMap() {
@@ -145,7 +126,6 @@ public class SOM {
         }
         return heatMapArray;
     }
-
 
     private float getRandom() {
         return random.nextFloat();
