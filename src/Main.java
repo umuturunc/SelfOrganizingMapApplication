@@ -27,7 +27,8 @@ public class Main {
 
         MyGUI myGUI = new MyGUI();
 
-        myGUI.showHeatMap(som.createHeatMap(), "dene");
+
+        myGUI.showHeatMap(som.createHeatMap(), "");
         //myGUI.showHeatMap(null);
 
 ////        som.printValues();

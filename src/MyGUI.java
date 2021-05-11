@@ -29,7 +29,7 @@ public class MyGUI {
                 button.removeMouseListener(button.getMouseListeners()[0]);
                 button.setFont(new Font(null, Font.BOLD, 20));
                 button.setText(String.valueOf(array[i][j]));
-                button.setBackground(new Color( 1f,0f,0f,normalizedArray[i][j]));
+                button.setBackground(new Color(1f, 0f, 0f, normalizedArray[i][j]));
                 panel.add(button);
             }
         }
@@ -45,7 +45,7 @@ public class MyGUI {
         float[][] normalizedArray = new float[10][10];
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                normalizedArray[i][j] = (array[i][j] / (float)max);
+                normalizedArray[i][j] = (array[i][j] / (float) max);
 //                System.out.println(array[i][j] + " " + max + " " +   (array[i][j]/(float)max));
             }
         }

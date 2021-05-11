@@ -6,30 +6,31 @@ public class SOM {
     float[][] inputs;
     float learningRate = 0.5f;
     int[][] heatMapArray;
+    float[][] neuronDistances;
 
     public SOM(float[][] inputs) {
         neurons = new float[10][10][8];
         random = new Random();
         this.inputs = inputs;
         heatMapArray = new int[10][10];
-
+        neuronDistances = new float[10][10];
         initializeWeights();
     }
 
     public void updateLearningRate() {
-        learningRate *= 0.9f;
+        learningRate *= 0.5f;
     }
 
 
     public void iterateAllInputs() {        //1 epoch
 //        System.out.println(inputs.length);
         for (int i = 0; i < inputs.length; i++) {
-            int[] nearesNeuronIndex = nearestNeuron(inputs[i], neurons);
+            int[] nearesNeuronIndex = nearestNeuronForInput(inputs[i], neurons);
             updateNeuronWeights(inputs[i], nearesNeuronIndex);
         }
     }
 
-    private float euclidDistance(float[] array1, float[] array2) {
+    private float euclidDistanceBetweenInputAndNeuron(float[] array1, float[] array2) {      //verilen input ve nöron ağırlık vektörünün birbirine uzaklığını hesapla
 
         float distance = 0.0f;
         for (int i = 0; i < 8; i++) {
@@ -39,12 +40,12 @@ public class SOM {
         return distance;
     }
 
-    private int[] nearestNeuron(float[] input, float[][][] neurons) {
+    private int[] nearestNeuronForInput(float[] input, float[][][] neurons) {   //verilen input'a en yakın nöronun indis numaralarını dizi içerisinde döndür
         int[] nearestNeuronIndexes = new int[2];
         float minDistance = Float.MAX_VALUE;
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                float distance = euclidDistance(neurons[i][j], input);
+                float distance = euclidDistanceBetweenInputAndNeuron(neurons[i][j], input);
                 if (distance < minDistance) {
                     minDistance = distance;
                     nearestNeuronIndexes[0] = i;
@@ -53,17 +54,6 @@ public class SOM {
             }
         }
         return nearestNeuronIndexes;
-    }
-
-    public int[][] createHeatMap() {
-        heatMapArray = new int[10][10];
-        for (int i = 0; i < inputs.length; i++) {
-            int[] nearesNeuronIndex = nearestNeuron(inputs[i], neurons);
-            int row = nearesNeuronIndex[0];
-            int column = nearesNeuronIndex[1];
-            heatMapArray[row][column]++;
-        }
-        return heatMapArray;
     }
 
 
@@ -75,17 +65,34 @@ public class SOM {
             weight = weight + learningRate * (input[k] - weight);
             neurons[i][j][k] = weight;
         }
+
+
     }
+//    private void deltaWeight()
+//    {
+//        float deltaWeight =
+//    }
+//
+//    private float hebbsRule()
+//    {
+//        return learningRate
+//    }
+//
+//    private float forgettingRule()
+//    {
+//
+//    }
 
-
-    private void initializeWeights() {
+    private void distanceBetweenWinningNeuronAndAllNeurons(int[] winningNeuronIndexes) {    //nöronlar arasındaki uzaklık matristeki koordinatlarına göre hesaplanıyor
+        int winningI = winningNeuronIndexes[0];
+        int winningJ = winningNeuronIndexes[1];
+        neuronDistances = new float[10][10];
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                for (int k = 0; k < 8; k++) {
-                    neurons[i][j][k] = getRandom();
-                }
+                neuronDistances[i][j] = (float) Math.sqrt((i - winningI) * (i - winningI) + (j - winningJ) * (j - winningJ));
             }
         }
+
     }
 
     public void printInputValues() {
@@ -94,6 +101,16 @@ public class SOM {
                 System.out.print(inputs[i][j] + " ");
             }
             System.out.println();
+        }
+    }
+
+    private void initializeWeights() {
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                for (int k = 0; k < 8; k++) {
+                    neurons[i][j][k] = getRandom();
+                }
+            }
         }
     }
 
@@ -116,6 +133,17 @@ public class SOM {
         }
         System.out.println();
 
+    }
+
+    public int[][] createHeatMap() {
+        heatMapArray = new int[10][10];
+        for (int i = 0; i < inputs.length; i++) {
+            int[] nearesNeuronIndex = nearestNeuronForInput(inputs[i], neurons);
+            int row = nearesNeuronIndex[0];
+            int column = nearesNeuronIndex[1];
+            heatMapArray[row][column]++;
+        }
+        return heatMapArray;
     }
 
 
